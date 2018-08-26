@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Get Giphy with it</title>
+</head>
+<body>
+        
+        <button data-game="Dbz">Kamehameha!</button>
+        <button data-game="Zelda">Hiya!</button>
+        <button data-Game="Mario">yahoo!</button>
+        <div id="gifs-appear-here">
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        $(".gif").on("click",function(){
+            var state =$(this).attr("data-state");
+            if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+
+ $("button").on("click", function() {
+
+ var game = $(this).attr("data-game");
+ var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+ game + "&api_key=16e61bd356914bac998d1b45ca05607a&limit=10";
+;
+
+
+
+         $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+      .then(function(response) {
+          console.log(queryURL);
+          console.log(response);
+          var results = response.data;
+          for (var i = 0; i < results.length; i++) {
+            var gameDiv = $("<div>");
+                    var p = $("<p>").text("Rating: " + results[i].rating);
+                            var gameImage = $("<img>");
+                        gameImage.attr("src", results[i].images.fixed_height.url);
+             gameDiv.append(p);
+            gameDiv.append(gameImage);
+            $("#gifs-appear-here").prepend(gameDiv);
+          }
+        });
+
+
+
+
+
+
+
+ });
+
+
+
+
+
+
+
+        
+      }
+    });
+        
+        
+        
+
+    </script>
+</body>
+</html>
